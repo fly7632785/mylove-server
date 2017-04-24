@@ -16,7 +16,7 @@ import java.util.List;
  * Created by jafir on 2017/4/21.
  */
 @Controller
-@RequestMapping(value = "/photo")
+@RequestMapping(value = "/text")
 public class TextController {
     @Resource
     TextService textService;

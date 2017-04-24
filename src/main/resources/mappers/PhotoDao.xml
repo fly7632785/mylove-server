@@ -5,24 +5,25 @@
 
 <mapper namespace="com.demo.dao.PhotoDao">
 
-    <!--<resultMap type="com.demo.dao.entity.PhotoEntity" id="photoMap">-->
-        <!--<id property="id" column="id"/>-->
-        <!--<result property="url" column="url"/>-->
-        <!--<result property="createTIme" column="create_time"/>-->
-    <!--</resultMap>-->
+    <resultMap type="com.demo.dao.entity.PhotoEntity" id="photoResult">
+        <id column="id" property="id"/>
+        <result property="createTime" column="create_time"/>
+        <result column="url" property="url"/>
+        <result column="description" property="description"/>
+    </resultMap>
 
 
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.demo.dao.entity.PhotoEntity">
         INSERT INTO
-        photo(id,url,desciption)
-        VALUES(#{id},#{url},#{desciption});
+        photo(url,description)
+        VALUES(#{url},#{description});
     </insert>
     <update id="update" parameterType="com.demo.dao.entity.PhotoEntity">
         UPDATE photo
-        SET id=#{id} WHERE id=#{id},url=#{url},desciption=#{desciption}
+        SET id=#{id} WHERE url=#{url},description=#{description}
     </update>
 
-    <select id="selectById" resultType="com.demo.dao.entity.PhotoEntity" parameterType="java.lang.Integer">
+    <select id="selectById" resultMap="photoResult" parameterType="java.lang.Integer">
         SELECT *
         FROM photo
         WHERE id=#{id};
@@ -32,7 +33,7 @@
         DELETE FROM photo
         WHERE id=#{id}
     </delete>
-    <select id="findAll" resultType="com.demo.dao.entity.PhotoEntity">
+    <select id="findAll" resultMap="photoResult">
         SELECT * FROM photo
     </select>
 

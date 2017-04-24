@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -21,7 +22,7 @@ public class PhotoController {
     PhotoService photoService;
 
     @ResponseBody
-    @RequestMapping(value = "/getphotos", method = RequestMethod.GET)
+    @RequestMapping(value = "/getPhotos", method = RequestMethod.GET)
     public PhotoModel<List<PhotoEntity>> getphotos() {
 
         PhotoModel model = new PhotoModel();
@@ -29,11 +30,15 @@ public class PhotoController {
         return model;
 
     }
-
     @ResponseBody
-    @RequestMapping(value = "/createphoto", method = RequestMethod.GET)
-    public PhotoModel<PhotoEntity> createphoto(PhotoEntity entity) {
+    @RequestMapping(value = "/createPhoto", method = RequestMethod.GET)
+    public PhotoModel<PhotoEntity> createphoto(HttpServletRequest request) {
 
+        String url = request.getParameter("url");
+        String description = request.getParameter("description");
+        PhotoEntity entity = new PhotoEntity();
+        entity.setDesc(description);
+        entity.setUrl(url);
 
         photoService.create(entity);
 

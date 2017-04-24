@@ -1,15 +1,17 @@
 package com.demo.base;
 
-import javax.annotation.Resource;
 import java.util.List;
 
 /**
  * Created by jafir on 2017/4/21.
  */
 public class BaseServiceImpl<T extends BaseDao<E>,E> implements BaseService<E>{
-    @Resource
     private T dao;
 
+
+    public void setDao(T dao) {
+        this.dao = dao;
+    }
 
     public Integer create(E entity) {
         return dao.insert(entity);

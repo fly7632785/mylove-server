@@ -6,12 +6,24 @@ import com.demo.dao.entity.PhotoEntity;
 import com.demo.service.PhotoService;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
+
 /**
  * 用户服务实现类
  *
- * @author Wwwwei
  */
 @Service
 public class PhotoServiceImpl extends BaseServiceImpl<PhotoDao, PhotoEntity> implements PhotoService {
 
+    @Resource
+    private PhotoDao dao;
+
+
+
+    @PostConstruct
+    public void dao()
+    {
+        super.setDao(dao);
+    }
 }

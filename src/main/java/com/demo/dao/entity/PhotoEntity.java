@@ -5,7 +5,7 @@ package com.demo.dao.entity;
  */
 public class PhotoEntity {
     private Integer id;
-    private String desciption;
+    private String description;
     private String url;
     private String createTime;
 
@@ -19,11 +19,11 @@ public class PhotoEntity {
     }
 
     public String getDesc() {
-        return desciption;
+        return description;
     }
 
     public void setDesc(String desc) {
-        this.desciption = desc;
+        this.description = desc;
     }
 
     public String getUrl() {

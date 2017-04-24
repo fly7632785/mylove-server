@@ -6,12 +6,12 @@
 <mapper namespace="com.demo.dao.TextDao">
     <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.demo.dao.entity.TextEntity">
         INSERT INTO
-        text(id,content)
-        VALUES(#{id},#{content});
+        text(content)
+        VALUES(#{content});
     </insert>
     <update id="update" parameterType="com.demo.dao.entity.TextEntity">
         UPDATE text
-        SET id=#{id} WHERE id=#{id},content=#{content}}
+        SET id=#{id} WHERE content=#{content}}
     </update>
 
     <select id="selectById" resultType="com.demo.dao.entity.TextEntity" parameterType="java.lang.Integer">
