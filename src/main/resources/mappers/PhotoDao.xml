@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.demo.dao.PhotoDao">
+
+    <!--<resultMap type="com.demo.dao.entity.PhotoEntity" id="photoMap">-->
+        <!--<id property="id" column="id"/>-->
+        <!--<result property="url" column="url"/>-->
+        <!--<result property="createTIme" column="create_time"/>-->
+    <!--</resultMap>-->
+
+
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="com.demo.dao.entity.PhotoEntity">
+        INSERT INTO
+        photo(id,url,desciption)
+        VALUES(#{id},#{url},#{desciption});
+    </insert>
+    <update id="update" parameterType="com.demo.dao.entity.PhotoEntity">
+        UPDATE photo
+        SET id=#{id} WHERE id=#{id},url=#{url},desciption=#{desciption}
+    </update>
+
+    <select id="selectById" resultType="com.demo.dao.entity.PhotoEntity" parameterType="java.lang.Integer">
+        SELECT *
+        FROM photo
+        WHERE id=#{id};
+    </select>
+
+    <delete id="delete" parameterType="java.lang.Integer">
+        DELETE FROM photo
+        WHERE id=#{id}
+    </delete>
+    <select id="findAll" resultType="com.demo.dao.entity.PhotoEntity">
+        SELECT * FROM photo
+    </select>
+
+</mapper>
