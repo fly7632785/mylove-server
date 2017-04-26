@@ -1,6 +1,5 @@
 package com.demo.controller;
 
-import com.demo.dao.entity.PhotoEntity;
 import com.demo.dao.entity.TextEntity;
 import com.demo.model.TextModel;
 import com.demo.service.TextService;
@@ -10,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -22,7 +22,7 @@ public class TextController {
     TextService textService;
 
     @ResponseBody
-    @RequestMapping(value = "/gettexts", method = RequestMethod.GET)
+    @RequestMapping(value = "/getTexts", method = RequestMethod.GET)
     public TextModel<List<TextEntity>> getTexts() {
 
         TextModel model = new TextModel();
@@ -32,9 +32,11 @@ public class TextController {
     }
 
     @ResponseBody
-    @RequestMapping(value = "/createtext", method = RequestMethod.GET)
-    public TextModel<PhotoEntity> createText(TextEntity entity) {
-
+    @RequestMapping(value = "/createText", method = RequestMethod.GET)
+    public TextModel<TextEntity> createText(HttpServletRequest request) {
+        String content = request.getParameter("content");
+        TextEntity entity = new TextEntity();
+        entity.setContent(content);
         textService.create(entity);
 
         TextModel model = new TextModel();
@@ -42,4 +44,25 @@ public class TextController {
         return model;
 
     }
+
+    @ResponseBody
+    @RequestMapping(value = "/deleteText", method = RequestMethod.GET)
+    public TextModel<TextEntity> deleteText(HttpServletRequest request) {
+
+        String id = request.getParameter("id");
+        int i = textService.delete(Integer.valueOf(id));
+
+        TextModel model = new TextModel();
+        if (i > 0) {
+            model.setMsg("删除成功");
+            model.setStatus(true);
+        } else {
+            model.setMsg("删除失败");
+            model.setStatus(false);
+        }
+        return model;
+
+    }
+
 }
+

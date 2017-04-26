@@ -19,8 +19,6 @@ public class PhotoServiceImpl extends BaseServiceImpl<PhotoDao, PhotoEntity> imp
     @Resource
     private PhotoDao dao;
 
-
-
     @PostConstruct
     public void dao()
     {

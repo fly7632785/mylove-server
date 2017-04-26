@@ -30,6 +30,7 @@ public class PhotoController {
         return model;
 
     }
+
     @ResponseBody
     @RequestMapping(value = "/createPhoto", method = RequestMethod.GET)
     public PhotoModel<PhotoEntity> createphoto(HttpServletRequest request) {
@@ -37,13 +38,30 @@ public class PhotoController {
         String url = request.getParameter("url");
         String description = request.getParameter("description");
         PhotoEntity entity = new PhotoEntity();
-        entity.setDesc(description);
+        entity.setDescription(description);
         entity.setUrl(url);
 
         photoService.create(entity);
 
         PhotoModel model = new PhotoModel();
         model.setData(photoService.selectById(entity.getId()));
+        return model;
+
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/deletePhoto", method = RequestMethod.GET)
+    public PhotoModel<PhotoEntity> deletePhoto(HttpServletRequest request) {
+
+        String id = request.getParameter("id");
+        int i = photoService.delete(Integer.valueOf(id));
+
+        PhotoModel model = new PhotoModel();
+        if (i > 0) {
+            model.setMsg("删除成功");
+        } else {
+            model.setMsg("删除失败");
+        }
         return model;
 
     }
