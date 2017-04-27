@@ -1,6 +1,7 @@
 package com.demo.controller;
 
 import com.demo.dao.entity.PhotoEntity;
+import com.demo.model.PageModel;
 import com.demo.model.PhotoModel;
 import com.demo.service.PhotoService;
 import org.springframework.stereotype.Controller;
@@ -10,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * Created by jafir on 2017/4/21.
@@ -23,10 +23,17 @@ public class PhotoController {
 
     @ResponseBody
     @RequestMapping(value = "/getPhotos", method = RequestMethod.GET)
-    public PhotoModel<List<PhotoEntity>> getphotos() {
+    public PhotoModel<PageModel<PhotoEntity>> getphotos(HttpServletRequest request) {
 
-        PhotoModel model = new PhotoModel();
-        model.setData(photoService.findAll());
+        PhotoModel<PageModel<PhotoEntity>> model = new PhotoModel<PageModel<PhotoEntity>>();
+        PageModel pageModel = new PageModel();
+        String pageSize = request.getParameter("pageSize");
+        String curPage = request.getParameter("curPage");
+        pageModel.setPage(Integer.valueOf(curPage));
+        pageModel.setSize(Integer.valueOf(pageSize));
+        pageModel.setTotal(photoService.getTotal());
+        pageModel.setData(photoService.getPage(pageModel.getSize(), pageModel.getPage()));
+        model.setData(pageModel);
         return model;
 
     }

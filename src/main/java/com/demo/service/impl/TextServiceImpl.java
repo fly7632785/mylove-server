@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 用户服务实现类
@@ -17,10 +18,18 @@ import javax.annotation.Resource;
 @Service
 public class TextServiceImpl extends BaseServiceImpl<TextDao, TextEntity> implements TextService {
     @Resource
-    private TextDao textDao;
+    private TextDao dao;
+
     @PostConstruct
-    public void dao()
-    {
-        super.setDao(textDao);
+    public void dao() {
+        super.setDao(dao);
+    }
+
+    public List<TextEntity> getPage(int pageSize, int curPage) {
+        return dao.getPage((curPage - 1) * pageSize, pageSize);
+    }
+
+    public int getTotal() {
+        return dao.getTotal();
     }
 }

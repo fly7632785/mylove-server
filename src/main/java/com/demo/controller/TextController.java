@@ -1,16 +1,17 @@
 package com.demo.controller;
 
 import com.demo.dao.entity.TextEntity;
+import com.demo.model.PageModel;
 import com.demo.model.TextModel;
 import com.demo.service.TextService;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * Created by jafir on 2017/4/21.
@@ -23,10 +24,20 @@ public class TextController {
 
     @ResponseBody
     @RequestMapping(value = "/getTexts", method = RequestMethod.GET)
-    public TextModel<List<TextEntity>> getTexts() {
+    public TextModel<PageModel<TextEntity>> getTexts(HttpServletRequest request) {
 
-        TextModel model = new TextModel();
-        model.setData(textService.findAll());
+        TextModel<PageModel<TextEntity>> model = new TextModel<PageModel<TextEntity>>();
+        PageModel pageModel = new PageModel();
+        String pageSize = request.getParameter("pageSize");
+        String curPage = request.getParameter("curPage");
+
+        if (!StringUtils.isEmpty(pageSize) || !StringUtils.isEmpty(curPage)) {
+            pageModel.setPage(Integer.valueOf(curPage));
+            pageModel.setSize(Integer.valueOf(pageSize));
+        }
+        pageModel.setTotal(textService.getTotal());
+        pageModel.setData(textService.getPage(pageModel.getSize(), pageModel.getPage()));
+        model.setData(pageModel);
         return model;
 
     }

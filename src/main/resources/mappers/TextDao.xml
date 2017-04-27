@@ -28,4 +28,14 @@
         SELECT * FROM text
     </select>
 
+
+
+    <select id="getTotal" resultType="java.lang.Integer">
+        SELECT count(*) FROM text
+    </select>
+
+    <select id="getPage" parameterType="java.lang.Integer" resultType="com.demo.dao.entity.TextEntity">
+        SELECT * FROM text order by id desc
+      Limit #{0},#{1}
+    </select>
 </mapper>

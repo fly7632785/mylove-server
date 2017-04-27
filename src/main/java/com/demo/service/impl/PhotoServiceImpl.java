@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 用户服务实现类
@@ -24,4 +25,14 @@ public class PhotoServiceImpl extends BaseServiceImpl<PhotoDao, PhotoEntity> imp
     {
         super.setDao(dao);
     }
+
+    public List<PhotoEntity> getPage(int pageSize,int curPage) {
+        return dao.getPage((curPage-1)*pageSize,pageSize);
+    }
+
+    public int getTotal() {
+        return dao.getTotal();
+    }
+
+
 }
