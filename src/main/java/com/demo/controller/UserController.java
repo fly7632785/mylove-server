@@ -26,7 +26,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-
     @ResponseBody
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public LoginModel login(@Param(value = "username") String username, @Param(value = "password") String password, HttpSession httpSession) {

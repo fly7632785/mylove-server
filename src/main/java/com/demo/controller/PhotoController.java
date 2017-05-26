@@ -5,6 +5,7 @@ import com.demo.model.PageModel;
 import com.demo.model.PhotoModel;
 import com.demo.service.PhotoService;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,8 +30,12 @@ public class PhotoController {
         PageModel pageModel = new PageModel();
         String pageSize = request.getParameter("pageSize");
         String curPage = request.getParameter("curPage");
-        pageModel.setPage(Integer.valueOf(curPage));
-        pageModel.setSize(Integer.valueOf(pageSize));
+        if (!StringUtils.isEmpty(pageSize) ) {
+            pageModel.setPage(Integer.valueOf(curPage));
+        }
+        if( !StringUtils.isEmpty(curPage)){
+            pageModel.setSize(Integer.valueOf(pageSize));
+        }
         pageModel.setTotal(photoService.getTotal());
         pageModel.setData(photoService.getPage(pageModel.getSize(), pageModel.getPage()));
         model.setData(pageModel);

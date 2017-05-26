@@ -31,8 +31,10 @@ public class TextController {
         String pageSize = request.getParameter("pageSize");
         String curPage = request.getParameter("curPage");
 
-        if (!StringUtils.isEmpty(pageSize) || !StringUtils.isEmpty(curPage)) {
+        if (!StringUtils.isEmpty(pageSize) ) {
             pageModel.setPage(Integer.valueOf(curPage));
+        }
+        if( !StringUtils.isEmpty(curPage)){
             pageModel.setSize(Integer.valueOf(pageSize));
         }
         pageModel.setTotal(textService.getTotal());
